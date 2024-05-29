@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,10 +22,16 @@ Route::get('/', function () {
 Route::get('/users', [UserController::class, 'listAllUsers']) -> name('routeListAllUsers');
 
 //form para criar um usuário
-Route::get('/users/create', [UserController::class, 'createUser']) ->name('routeCreateUser');
+Route::post('/users/create', [UserController::class, 'createUser']) ->name('routeCreateUser');
 
 //consulta usuário por id
-Route::get('/users/ID', [UserController::class, 'listUserByID']) ->name('routeCreateUser');
+Route::get('/users/{uid}', [UserController::class, 'listUserByID']) ->name('routeListUser');
 
 //forms para editar usuario por id
-Route::get('/users/id/edit', [UserController::class, 'createUser']) ->name('routeCreateUser');
+Route::put('/users/edit/id', [UserController::class, 'updateUser']) ->name('routeUpdateUser');
+
+//delete usuario
+Route::get('/users/delete', [UserController::class, 'deleteUser']) ->name('routeDeleteUser');
+
+Route::match(['get', 'post'], '/login', [AuthController::class, 'loginUser']) ->name('login');
+

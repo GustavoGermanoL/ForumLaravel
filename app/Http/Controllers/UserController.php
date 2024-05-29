@@ -8,21 +8,28 @@ class UserController extends Controller
 {
     // camelCase
     // no_camel_case <<
-    public function listAllUsers(){
+
+    //feito
+    public function listAllUsers(Request $request){
         return view('users.listAllUsers');
     }
 
-    public function listUserByID(){
-
+    //feito
+    public function listUserByID($uid, Request $request){
+        return view('users.listUserByID');
+        print($uid);
     }
 
+    //feito
     public function createUser(){
         return view('users.createUser');
     }
+    //feito
     public function updateUser(){
-
+        return view('users.editUser');
     }
+    
     public function deleteUser(){
-
+        return view('users.deleteUser');
     }
 }

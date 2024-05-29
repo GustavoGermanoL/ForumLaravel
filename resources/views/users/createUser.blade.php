@@ -9,7 +9,7 @@
         <td> Email </td>
     </tr>
     <tr>
-        <td> Preencha com o nome do usuário</td>
+        <td> Preencha o nome do usuário </td>
         <td> Preencha o email do usuário </td>
     </tr>
 </table>
