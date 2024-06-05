@@ -62,9 +62,11 @@
         <h2>Login</h2>
         <form action = "{{ route('login') }}" method = "post">
             @csrf
-            <input type="text" name='username'placeholder="Username" required>
+            <input type="email" name='email' value = "{{ old('email') }}" placeholder="email" required>
+            @error('email') <span> {{ $message }} </span> @enderror
             <input type="password" name='password' placeholder="Password" required>
-            <button type="submit">Login</button>
+            @error('password') <span> {{ $message }} </span> @enderror
+            <button type="submit" value = "Logar" >Login</button>
         </form>
     </div>
 </body>

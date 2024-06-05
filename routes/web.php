@@ -14,24 +14,23 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 //retorna lista com todos os usuários
-Route::get('/users', [UserController::class, 'listAllUsers']) -> name('routeListAllUsers');
-
-//form para criar um usuário
-Route::post('/users/create', [UserController::class, 'createUser']) ->name('routeCreateUser');
-
-//consulta usuário por id
-Route::get('/users/{uid}', [UserController::class, 'listUserByID']) ->name('routeListUser');
+Route::middleware('auth') ->group(function (){
+    Route::get('/users', [UserController::class, 'listAllUsers']) -> name('routeListAllUsers');
+    Route::get('/users/{uid}', [UserController::class, 'listUserByID']) ->name('routeListUser');
+});
 
 //forms para editar usuario por id
-Route::put('/users/edit/id', [UserController::class, 'updateUser']) ->name('routeUpdateUser');
+Route::get('/users/edit/id', [UserController::class, 'updateUser']) ->name('routeUpdateUser');
 
-//delete usuario
+//deleta usuario
 Route::get('/users/delete', [UserController::class, 'deleteUser']) ->name('routeDeleteUser');
 
 Route::match(['get', 'post'], '/login', [AuthController::class, 'loginUser']) ->name('login');
+
+Route::match(['get', 'post'], '/register', [UserController::class, 'createUser']) ->name('register');
+
+Route::get('/logout', [AuthController::class, 'logoutUser']) ->name('logoutUser');
 
