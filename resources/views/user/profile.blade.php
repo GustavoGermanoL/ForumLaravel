@@ -1,24 +1,30 @@
 @extends('layouts.gpt')
 
-@section('header', 'Editar Usuário')
+@section('header', 'Listar Usuários por ID')
 
 @section('content')
-<table>
-    <tr>
-        <td> Nome </td>
-        <td> Email </td>
-    </tr>
-    <tr>
-        <td> Edite o nome do usuário </td>
-        <td> Edite o email do usuário </td>
-    </tr>
-</table>
+  @if($user != null)
+
+  <h2> Perfil </h2>
+  
+    <table>
+        <tr>
+            <td> Nome </td>
+            <td> Email </td>
+        </tr>
+        <tr>
+            <td> {{$user -> name}} </td>
+            <td> {{$user -> email}} </td>
+            <td> <p class = "editButton" href='updateUser.blade.php'> Edite este usuário </td>
+        </tr>
+    </table>
+    @endif
 
 @endsection
 
 @section('footer')
 
-Feito Por Gustavo Germânico
+ Feito Por Gustavo Germânico
 
 @endsection
 
@@ -52,4 +58,4 @@ footer {
   bottom: 0;
   width: 100%;
 }
-</style>
+    </style>

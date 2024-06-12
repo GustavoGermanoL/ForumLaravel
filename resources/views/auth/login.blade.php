@@ -31,7 +31,15 @@
             color: #333;
         }
 
-      .login-container input[type="text"],
+      .login-container input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            background-color: #fff;
+        } 
       .login-container input[type="password"] {
             width: 100%;
             padding: 10px;

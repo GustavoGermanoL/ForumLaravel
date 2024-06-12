@@ -18,15 +18,16 @@ use App\Http\Controllers\AuthController;
 
 //retorna lista com todos os usuários
 Route::middleware('auth') ->group(function (){
-    Route::get('/users', [UserController::class, 'listAllUsers']) -> name('routeListAllUsers');
+    Route::get('/users', [UserController::class, 'listAllUsers']) -> name('listAllUsers');
     Route::get('/users/{uid}', [UserController::class, 'listUserByID']) ->name('routeListUser');
 });
 
 //forms para editar usuario por id
-Route::get('/users/edit/id', [UserController::class, 'updateUser']) ->name('routeUpdateUser');
+Route::put('/users/{uid}/update', [UserController::class, 'updateUser']) ->name('routeUpdateUser');
 
+Route::get('/users/{uid}/edit', [ UserController::class, 'editUser']) -> name('routeEditUser');
 //deleta usuario
-Route::get('/users/delete', [UserController::class, 'deleteUser']) ->name('routeDeleteUser');
+Route::delete('/users/{uid}/delete', [UserController::class, 'deleteUser']) ->name('routeDeleteUser');
 
 Route::match(['get', 'post'], '/login', [AuthController::class, 'loginUser']) ->name('login');
 

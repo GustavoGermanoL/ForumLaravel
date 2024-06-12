@@ -15,12 +15,14 @@ class UserController extends Controller
 
     //feito
     public function listAllUsers(Request $request){
-        return view('user.listAllUsers');
+        $users = User::all();
+        return view('user.listAllUsers', ['users' => $users]);
     }
 
     //feito
     public function listUserByID($uid, Request $request){
-        return view('user.listUserByID');
+        $user = User::where('id', $uid) -> first();
+        return view('user.profile', ['user' => $user]);
         print($uid);
     }
 
@@ -52,11 +54,26 @@ class UserController extends Controller
         }
     }
     //feito
-    public function updateUser(){
-        return view('user.editUser');
+    public function updateUser(Request $request, $uid){
+        $user = User::where('id', $uid) -> first();
+        $user -> name = $request -> name;
+        $user -> email = $request -> email;
+        if($requet -> password != ''){
+            $user -> $password = Hash::make($request -> $password);
+        }
+        $user->save();
+        return redirect() -> route('routeListUser', [$user -> id])
+                                -> with('message', 'Atualizado com sucesso!');
+    }
+    public function editUser(Request $request, $uid){
+        $user = User::where('id', $uid) -> first();
+        return view('user.updateUser', ['user' => $user]);
+    }
+    public function deleteUser(){
+        $user = User::where('id', $uid) -> first();
+        $user->delete();
+        return redirect() -> route('listAllUsers')
+                                -> with('message', 'Excluido com sucesso');
     }
     
-    public function deleteUser(){
-        return view('user.deleteUser');
-    }
 }
