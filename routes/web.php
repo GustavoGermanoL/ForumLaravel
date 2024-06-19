@@ -22,6 +22,9 @@ Route::middleware('auth') ->group(function (){
     Route::get('/users/{uid}', [UserController::class, 'listUserByID']) ->name('routeListUser');
 });
 
+Route::get('/index', [UserController::class, 'index']) ->name('routeIndex');
+
+
 //forms para editar usuario por id
 Route::put('/users/{uid}/update', [UserController::class, 'updateUser']) ->name('routeUpdateUser');
 

@@ -3,22 +3,22 @@
 @section('header', 'Editar Usuário')
 
 @section('content')
-**HTML**
-```html
-//CRIAR UMA ROTA PARA MANDAR OS DADOS DO USER PRO UPDATE
-<form id="edit-user-form" method = "post" action = "{{ route('routeUpdateUser') }}">
-  @method('put'); 
-  <label for="username">Nome: {{$user -> name}}</label>
-  <input type="text" id="username" name="name" value=""><br><br>
 
-  <label for="email">Email:</label>
-  <input type="email" id="email" name="email" value=""><br><br>
+<form id="edit-user-form" method = "POST" action = "{{ route('routeUpdateUser', $user->id) }}">
+  @method('put')
+  @csrf
+  <label for="username">Nome: </label>
+  <input type="text" id="username" name="name" value="{{$user -> name}}"><br><br>
 
-  <label for="password">Password:</label>
+  <label for="email">Email: </label>
+  <input type="email" id="email" name="email" value="{{$user -> email}}"><br><br>
+
+  <label for="password">Password: </label>
   <input type="password" id="password" name="password" value=""><br><br>
 
   <input type="submit" value="Save Changes">
 </form>
+
 @endsection
 
 @section('footer')

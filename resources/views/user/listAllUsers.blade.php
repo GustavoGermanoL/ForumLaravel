@@ -13,6 +13,14 @@
         <tr>
             <td> {{$user->name}} </td>
             <td> {{$user->email}} </td>
+            <td> <a class = "editButton" href="{{ route('routeEditUser', $user->id) }}"> Edite este usuário </td>
+            <td> 
+            <form action="{{ route('routeDeleteUser', $user->id) }}" method = "POST">
+                @csrf
+                @method('DELETE') 
+              <input type="submit" value="Apague este usuário">
+            </form>
+            </td>
         </tr>
         
         @endforeach
@@ -47,13 +55,5 @@ table th {
   color: white;
 }
 
-footer {
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  padding: 20px;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-}
+
     </style>

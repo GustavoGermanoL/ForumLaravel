@@ -13,6 +13,9 @@ class UserController extends Controller
     // camelCase
     // no_camel_case <<
 
+    public function index(Request $request){
+        return view('index.index');
+    }
     //feito
     public function listAllUsers(Request $request){
         $users = User::all();
@@ -58,7 +61,7 @@ class UserController extends Controller
         $user = User::where('id', $uid) -> first();
         $user -> name = $request -> name;
         $user -> email = $request -> email;
-        if($requet -> password != ''){
+        if($request -> password != ''){
             $user -> $password = Hash::make($request -> $password);
         }
         $user->save();
@@ -66,12 +69,11 @@ class UserController extends Controller
                                 -> with('message', 'Atualizado com sucesso!');
     }
     public function editUser(Request $request, $uid){
-        $user = User::where('id', $uid) -> first();
-        return view('user.updateUser', ['user' => $user]);
+        $user = User::where('id', $uid)->first();
+        return view('user.editUser', ['user' => $user]);
     }
-    public function deleteUser(){
-        $user = User::where('id', $uid) -> first();
-        $user->delete();
+    public function deleteUser(Request $request, $uid){
+        User::where('id', $uid) -> delete();
         return redirect() -> route('listAllUsers')
                                 -> with('message', 'Excluido com sucesso');
     }
