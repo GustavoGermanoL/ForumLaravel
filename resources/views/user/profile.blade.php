@@ -16,6 +16,7 @@
             <td> {{$user -> name}} </td>
             <td> {{$user -> email}} </td>
             <td> <p class = "editButton" href='updateUser.blade.php'> Edite este usuário </td>
+            <td> <p class = "deleteButton" href='updateUser.blade.php'> Apague a conta deste usuário </td>
         </tr>
     </table>
     @endif

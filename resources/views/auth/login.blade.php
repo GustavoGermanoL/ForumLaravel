@@ -74,6 +74,7 @@
             @error('email') <span> {{ $message }} </span> @enderror
             <input type="password" name='password' placeholder="Password" required>
             @error('password') <span> {{ $message }} </span> @enderror
+            <a class ="register" href="{{ route('register') }}"> Registre-se aqui! </a>
             <button type="submit" value = "Logar" >Login</button>
         </form>
     </div>

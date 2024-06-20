@@ -2,7 +2,8 @@
 <style>
 h2{
     text-align: "center";
-}    
+}
+
 </style>
 @section('header', 'Bem Vindo')
 
