@@ -38,3 +38,5 @@ Route::match(['get', 'post'], '/register', [UserController::class, 'createUser']
 
 Route::get('/logout', [AuthController::class, 'logoutUser']) ->name('logoutUser');
 
+Route::get('/create/topic', [TopicController::class, 'createTopic']) ->name('routeCreateTopic');
+

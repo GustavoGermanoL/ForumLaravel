@@ -3,30 +3,6 @@
 @section('header', 'Editar Usuário')
 
 @section('content')
-
-<form id="edit-user-form" method = "POST" action = "{{ route('routeUpdateUser', $user->id) }}">
-  @method('put')
-  @csrf
-  <label for="username">Nome: </label>
-  <input type="text" id="username" name="name" value="{{$user -> name}}"><br><br>
-
-  <label for="email">Email: </label>
-  <input type="email" id="email" name="email" value="{{$user -> email}}"><br><br>
-
-  <label for="password">Password: </label>
-  <input type="password" id="password" name="password" value=""><br><br>
-
-  <input type="submit" value="Save Changes">
-</form>
-
-@endsection
-
-@section('footer')
-
-Feito Por Gustavo Germânico
-
-@endsection
-
 <style>
   #edit-user-form {
   max-width: 400px;
@@ -62,3 +38,28 @@ input[type="submit"]:hover {
   background-color: #3e8e41;
 }
 </style>
+
+<form id="edit-user-form" method = "POST" action = "{{ route('routeUpdateUser', $user->id) }}">
+  @method('put')
+  @csrf
+  <label for="username">Nome: </label>
+  <input type="text" id="username" name="name" value="{{$user -> name}}"><br><br>
+
+  <label for="email">Email: </label>
+  <input type="email" id="email" name="email" value="{{$user -> email}}"><br><br>
+
+  <label for="password">Password: </label>
+  <input type="password" id="password" name="password" value=""><br><br>
+
+  <input type="submit" value="Save Changes">
+</form>
+
+@endsection
+
+@section('footer')
+
+Feito Por Gustavo Germânico
+
+@endsection
+
+

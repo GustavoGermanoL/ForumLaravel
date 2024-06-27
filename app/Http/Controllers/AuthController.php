@@ -16,7 +16,7 @@ class AuthController extends Controller
                         'password' => 'required|string'
                     ]);
             if(Auth::attempt($credentials)){
-                return redirect() -> intended('/users')
+                return redirect() -> intended('/index')
                                   ->with('success', 'Login realizado com sucesso.');
             }
             return back()->withErrors([
@@ -27,7 +27,7 @@ class AuthController extends Controller
 
     public function logoutUser(Request $request){
             Auth::logout();
-            return redirect() -> route('login') -> with('success', 'Logout realizado com sucesso. ');
+            return redirect() -> route('routeIndex') -> with('success', 'Logout realizado com sucesso. ');
     }
     
 }

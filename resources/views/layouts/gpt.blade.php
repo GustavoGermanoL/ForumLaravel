@@ -1,163 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/3ec66055ff.js" crossorigin="anonymous"></script>
     <title>Document</title>
+
     <style>
-     
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    header {
+        background-color: #3c3c3c;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 2px solid #0965bb;
+        position: static;
+
+    }
+
+    nav {
+        background-color: #3c3c3c;
+        padding: 10px;
+        display: flex;
+    }
 
 
-  body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-}
 
-header {
-  background-color: #3c3c3c;
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
-  
-  align-items: center;
-  border-bottom: 2px solid #0965bb;
-}
+    .sidebar-main {
+        box-sizing: border-box;
+        background-color: #3c3c3c;
+    }
 
-nav {
-    background-color: #3c3c3c;
-    padding: 10px;
-    display: flex;
-}
+    .sidebar {
+        position: fixed;
+        width: 164px;
+        height: 90vh;
+        display: flex;
+        justify-content: space-between;
+        border-right: 1px solid #0965bb;
 
-.left-sidebar-main {
-  box-sizing: border-box;
-  background-color: #3c3c3c;
-}
+    }
 
-.left-sidebar-sticky {
-  position: fixed;
-  width: 164px;
-  height: 90vh;
-  display: flex;
-  justify-content: space-between;
-  border-right: 1px solid #0965bb;
-   
-}
+    .sidebar ul {
+        text-align: center;
 
-.left-sidebar-sticky ul {
-  text-align: center;
-  
-}
-.home-page{
-  margin-top: 70px;
-}
-.left-sidebar-sticky li {
-  display: inline-block;
-  margin-bottom: 50px;
-   
-}
-.header-left {
-  font-size: 15px;
-  font-weight: bold;
-}
+    }
 
-.header-right {
-  display: flex;
-  align-items: center;
-}
+    .home-page {
+        margin-top: 50px;
+        text-decoration: none;
+        color: #38b6ff;
+    }
 
-.btn-login {
-  background-color: #F0F4F5; 
-  color: #479BD8;
-  border: 1px outset buttonborder;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 10px; 
-  margin-left: 10px;
-  text-decoration: none;
+    .exit {
+        margin-top: auto;
+        color: #38b6ff;
+    }
 
-}
-.btn-register {
-  background-color: #479BD8; 
-  color: #F0F4F5;
-  border: 1px outset buttonborder;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 10px; 
-  margin-left: 10px;
-  text-decoration: none;
+    .sidebar li {
+        display: inline-block;
+        margin-bottom: 50px;
+        margin-left: -50px;
 
-}
+    }
 
-.btn-login:hover,.btn-register:hover {
-  background-color: #87cefa; 
-}
+    a {
+        text-decoration: none;
+        color: #0081fe;
+    }
 
-.content {
-  margin-left: 220px; /* adjust the margin to fit your content */
-  padding: 20px; /* add some padding to create space between content and sidebar */
-  box-sizing: border-box;
-}
+    .header-left {
+        font-weight: bold;
+        text-align: center;
+        flex: 1;
+    }
 
+    .header-right {
+        display: flex;
+        align-items: center;
+    }
 
-/* footer {
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  padding: 10px;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-} */
+    .profile {
+        position: fixed;
+        bottom: 40;
+    }
+
+    .login {
+        position: fixed;
+        bottom: 0;
+        margin-right: 20px;
+    }
+
+    .exit {
+        position: fixed;
+        bottom: 0;
+        margin-left: -50px;
+    }
+
+    .content {
+        flex: 1;
+        padding: 20px;
+        margin-left: 164px;
+        width: 100%
+    }
     </style>
 </head>
+
 <body>
-    
-<header>
-<div class="header-left">
-    <h1> Fórum </h1>
-</div>
+    <header>
+        <div class="header-left">
+            <h1>Fórum Tech</h1>
+        </div>
+        <!-- @if(auth()->check())
+        <div class="header-right">
+            <a class="btn-login" href="{{route('logoutUser')}}">Log Out</a>
+        </div>
+        @else
+        <div class="header-right">
+            <a class="btn-login" href="{{route('login')}}">Log in</a>
+            <a class="btn-register" href="{{route('register')}}">Register</a>
+        </div>
+        @endif -->
+    </header>
 
-<div class="header-right">
-  <a class="btn-login" href="{{route('login')}}">Log in</a>
-  <a class="btn-register" href="{{route('register')}}"> Register</a>
-</div>
+    <div class="sidebar-main">
+        <div class="sidebar">
+            <nav>
+                <ul>
+                    <li class="home-page">
+                        <a class="fa-solid fa-house" href="{{route('routeIndex')}}"> <b>Pagina Inicial</b> </a>
+                    </li>
 
-</header>
- 
-<div class= "left-sidebar-main">
-  <div class = "left-sidebar-sticky"> 
-  <nav>
-    <ul>
-      <li class="home-page" > <a href="{{route('routeIndex')}}"> Home Page </a></li>
-      <li> Meus tópicos </li>
-      <li> Explorar </li>
-    </ul>
-</nav>
-  </div>
+                    <li class="fa-solid fa-magnifying-glass">Explorar</li>
+                    @if(auth() -> check())
+                    <li class="allusers">
+                        <a class="fa-solid fa-users" href="{{ route('listAllUsers') }}"> Usuários </a>
+                    </li>
+                    @endif
+                    <div class="spacer"></div>
+
+                    @if(auth() -> check())
+
+                    <li class="profile">
+                        <a class="fa-solid fa-user" href="{{ route('routeListUser', Auth::user()->id) }}">Perfil</a>
+                    </li>
+                    <li class="exit">
+                        <a class="fa-solid fa-right-from-bracket" href="{{ route('logoutUser') }}">Sair</a>
+                    </li>
 
 
-</div>
-    <!-- <nav class = "topnav">
-    <ul>
-      <li><a href="#">Página Inicial</a></li>
-      <li><a href="#">Explorar</a></li>
-      <li><a href="#">Notificações</a></li>
-      <li><a href="#">Minhas conversas</a></li>
-      <li><a href="#">Configurações</a></li>
-     <li><a href="{{ route('logoutUser') }}"> Deslogar </a>
-    </ul>
-  </nav> -->
-        
-  
-<main>
-    <div class = "content">
-        @yield('content')
+
+
+                    @else
+                    <li class="login">
+                        <a class="fa-solid fa-user" href="{{ route('login') }}"> Entrar </a>
+                    </li>
+                    @endif
+                </ul>
+            </nav>
+        </div>
     </div>
-</main>
-    <!-- <footer> Feito por Gustavo Germânico </footer> -->
-</body> 
+
+    <main>
+        <div class="content">
+
+            @yield('content')
+
+        </div>
+
+    </main>
+
+
+
+
+</body>
+
 </html>
