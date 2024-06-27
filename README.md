@@ -11,7 +11,7 @@ Este projeto é um fórum desenvolvido em Laravel, seguindo as diretrizes e inst
 <p><li>Eloquent ORM: Mapeamento objeto-relacional para gerenciar modelos de dados de forma intuitiva.</p></li>
 <p><li>Autenticação: Pacote de autenticação padrão do Laravel</p></li>
 <p><li>Banco de Dados: MySQL</p></li>
-<p><li>Css: Para estilização</p></li>
+<p><li>CSS: Para estilização</p></li>
 
 
 
