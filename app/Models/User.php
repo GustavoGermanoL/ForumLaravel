@@ -24,6 +24,14 @@ class User extends Authenticatable
         'photo'
     ];
 
+    public function posts(){
+        return $this ->hasMany(Post::class);
+    }
+
+    public function rates(){
+        return $this -> hasMany(Rate::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

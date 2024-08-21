@@ -5,18 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class Rate extends Model
 {
-    use HasFactory;
 
-    protected $fillable = [
-        'content',
+    protected $filleable = [
+        'rate',
     ];
 
-    public function user(){
+    function user(){
         return $this -> belongsTo(User::class);
     }
-    public function rates(){
-        return $this -> hasMany(Post::class);
+
+    function post(){
+        return $this -> belongsTo(Post::class);
     }
+    use HasFactory;
 }
