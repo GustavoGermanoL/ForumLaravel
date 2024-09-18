@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('comments', function (Blueprint $table) {
-            $table->unsignedBigInter('id')->primary();
+            $table->unsignedBigInteger('id')->primary();
+            $table->unsignedBigInteger('topic_id');
             $table->foreign('id')->references('id')->on('posts');
             $table->text('content');
             $table->foreign('topic_id')->references('id')->on('topics');
