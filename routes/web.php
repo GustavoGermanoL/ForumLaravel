@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,5 +43,6 @@ Route::get('/create/topic', [TopicController::class, 'createTopic']) ->name('rou
 Route::get('/categories', [CategoryController::class , 'listAllCategories']) ->name('routeListCategories');
 Route::match(['get', 'post'], '/categories/create', [CategoryController::class, 'createCategory']) ->name('routeCreateCategory');
 Route::get('/categories/{cid}/edit', [CategoryController::class, 'editCategory']) -> name('routeEditCategory');
+Route::put('/categories/{cid}/update', [CategoryController::class, 'updateCategory']) ->name('routeUpdateCategory');
 Route::delete('/categories/{cid}/delete', [CategoryController::class, 'deleteCategory']) ->name('routeDeleteCategory');
-
+Route::get('/categories/{cid}', [CategoryController::class, 'listCategoryByID']) ->name('routeListCategory');
