@@ -14,51 +14,46 @@ class TagController extends Controller
     public function createTag(Request $request){
 
         if($request -> method() === 'GET'){
-            return view('categories.createTag');
+            return view('tags.createTag');
 
         }else {
             $request->validate([
                 'title' => 'required|string|max:255',
-                'description' => 'required|string|max:255|'
-                // 'created_at' => 'date_format|timestamp',
-                // 'updated_at' => 'date_format|timestamp|'
             ]);
 
             $Tag = Tag::create([
                 'title' => $request->title,
-                'description' => $request->description,
                 // 'created_at' => now(),
                 // 'update_at' => now()
             ]);
 
 
 
-            return redirect()->route('routeListCategories');
+            return redirect()->route('routeListTags');
 
         }
     }
-    public function updateTag(Request $request, $cid){
-        $Tag = Tag::where('id', $cid) -> first();
+    public function updateTag(Request $request, $tid){
+        $Tag = Tag::where('id', $tid) -> first();
         $Tag -> title = $request -> title;
-        $Tag -> description = $request -> description;
         $Tag->save();
-        return redirect() -> route('routeListCategories', [$Tag -> id])
+        return redirect() -> route('routeListTags', [$Tag -> id])
                                 -> with('message', 'Atualizado com sucesso!');
     }
 
-    public function editTag(Request $request, $cid){
-        $Tag = Tag::where('id', $cid)->first();
-        return view('categories.editTag', ['Tag' => $Tag]);
+    public function editTag(Request $request, $tid){
+        $Tag = Tag::where('id', $tid)->first();
+        return view('tags.editTag', ['Tag' => $Tag]);
     }
 
-    public function deleteTag(Request $request, $cid){
-        Tag::where('id', $cid) -> delete();
-        return redirect() -> route('routeListCategories')
-                                -> with('message', 'Exclcido com sucesso');
+    public function deleteTag(Request $request, $tid){
+        Tag::where('id', $tid) -> delete();
+        return redirect() -> route('routeListTags')
+                                -> with('message', 'Excltido com sucesso');
     }
 
-    public function listAllCategories(Request $request){
-        $categories = Tag::all();
-        return view('categories.listAllCategories', ['categories' => $categories]);
+    public function listAllTags(Request $request){
+        $tags = Tag::all();
+        return view('tags.listAllTags', ['tags' => $tags]);
     }
 }

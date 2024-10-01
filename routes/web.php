@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TagController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,7 +26,7 @@ Route::middleware('auth') ->group(function (){
 
 Route::get('/index', [UserController::class, 'index']) ->name('routeIndex');
 
-
+//Users
 
 Route::put('/users/{uid}/update', [UserController::class, 'updateUser']) ->name('routeUpdateUser');
 Route::get('/users/{uid}/edit', [ UserController::class, 'editUser']) -> name('routeEditUser');
@@ -35,7 +36,7 @@ Route::match(['get', 'post'], '/register', [UserController::class, 'createUser']
 Route::get('/logout', [AuthController::class, 'logoutUser']) ->name('logoutUser');
 
 
-
+//Topic
 Route::get('/create/topic', [TopicController::class, 'createTopic']) ->name('routeCreateTopic');
 
 
@@ -46,3 +47,13 @@ Route::get('/categories/{cid}/edit', [CategoryController::class, 'editCategory']
 Route::put('/categories/{cid}/update', [CategoryController::class, 'updateCategory']) ->name('routeUpdateCategory');
 Route::delete('/categories/{cid}/delete', [CategoryController::class, 'deleteCategory']) ->name('routeDeleteCategory');
 Route::get('/categories/{cid}', [CategoryController::class, 'listCategoryByID']) ->name('routeListCategory');
+
+
+
+//Tag
+Route::get('/tags', [TagController::class , 'listAllTags']) ->name('routeListTags');
+Route::match(['get', 'post'], '/tags/create', [TagController::class, 'createTag']) ->name('routeCreateTag');
+Route::get('/tags/{tid}/edit', [TagController::class, 'editTag']) -> name('routeEditTag');
+Route::put('/tags/{tid}/update', [TagController::class, 'updateTag']) ->name('routeUpdateTag');
+Route::delete('/tags/{tid}/delete', [TagController::class, 'deleteTag']) ->name('routeDeleteTag');
+Route::get('/tags/{tid}', [TagController::class, 'listTagByID']) ->name('routeListTag');
