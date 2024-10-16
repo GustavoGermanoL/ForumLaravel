@@ -21,6 +21,11 @@ class Topic extends Post
         return $this->belongsTo(Category::class);
     }
     
+    public function post()
+    {
+        return $this->belongsTo(Post::class);
+    }
+
     public function comments(){
         return $this->hasMany(Comment::class);
     }

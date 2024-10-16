@@ -16,6 +16,14 @@ class Post extends Model
     public function user(){
         return $this -> belongsTo(User::class);
     }
+
+    public function topic(){
+        return $this -> hasOne(Topic::class, 'id');
+    }
+    public function comments(){
+        return $this -> belongsTo(User::class);
+    }
+
     public function rates(){
         return $this -> hasMany(Post::class);
     }
