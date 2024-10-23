@@ -17,11 +17,8 @@ class Post extends Model
         return $this -> belongsTo(User::class);
     }
 
-    public function topic(){
-        return $this -> hasOne(Topic::class, 'id');
-    }
-    public function comments(){
-        return $this -> belongsTo(User::class);
+    public function postable(){
+        return $this -> morphTo();
     }
 
     public function rates(){

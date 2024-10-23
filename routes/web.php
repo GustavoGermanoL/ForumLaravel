@@ -37,8 +37,14 @@ Route::get('/logout', [AuthController::class, 'logoutUser']) ->name('logoutUser'
 
 
 //Topic
-Route::get('/create/topic', [TopicController::class, 'createTopic']) ->name('routeCreateTopic');
-
+Route::group(['prefix' => 'topics'], function(){
+Route::get('/topics', [TopicController::class , 'index']) ->name('routeListTopic');
+Route::match(['get', 'post'], '/create', [TopicController::class, 'createTopic']) ->name('routeCreateTopic');
+Route::get('/{cid}/edit', [TopicController::class, 'editTopic']) -> name('routeEditTopic');
+Route::put('/{cid}/update', [TopicController::class, 'updateTopic']) ->name('routeUpdateTopic');
+Route::delete('{cid}/delete', [TopicController::class, 'deleteTopic']) ->name('routeDeleteTopic');
+Route::get('/{cid}', [TopicController::class, 'listTopicByID']) ->name('routeListTopic');
+});
 
 //Category
 Route::get('/categories', [CategoryController::class , 'listAllCategories']) ->name('routeListCategories');

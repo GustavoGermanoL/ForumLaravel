@@ -14,6 +14,7 @@ class Topic extends Post
         'title',
         'description',
         'status',
+        'category_id',
     ];
 
     public function category()
@@ -23,7 +24,7 @@ class Topic extends Post
     
     public function post()
     {
-        return $this->belongsTo(Post::class);
+        return $this->morphOne(Post::class);
     }
 
     public function comments(){

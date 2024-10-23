@@ -13,5 +13,13 @@ class Comment extends Post
         'content',
     ];
 
+    public function post()
+    {
+        return $this->morphOne(Post::class);
+    }
+
+    public function topic(){
+        return $this->belongsTo(Topic::class);
+    }
     
 }
