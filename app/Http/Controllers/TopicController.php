@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Topic;
 use App\Models\Post;
+use App\Models\Category;
+use App\Http\Controllers\CategoryController;
+use Illuminate\Support\Facades\Auth;
+
 
 class TopicController extends Controller
 
@@ -14,19 +18,19 @@ class TopicController extends Controller
 
     public function createTopic(Request $request){
         if($request -> method() === 'GET'){
-            $category = Category::all();
+            $categories = Category::all();
 
-            return view('topic.createTopic', 'categories');
+            return view('topic.createTopic', ['categories' => $categories]);
 
         }else {
             $request->validate([
                 'title' => 'required|string',
                 'description' => 'required|string',
                 'image' =>'required|string',
-                'status' => 'required\int'
+                'status' => 'required|int'
             ]);
 
-        $topic = new Topic([
+        $topic = Topic::create([
             'title' => $request->title,
             'description' => $request->description,
             'status' => $request->status,
@@ -34,13 +38,19 @@ class TopicController extends Controller
         ]);
     }
 
-        $post = new Post([
+        // $post = new Post([
+        //     'image' => $request->image,
+        // ]);
+
+        $topic->post()->create([
+            'user_id' => Auth::id(),
             'image' => $request->image,
+            // 'image' => $request->file('image')->store('images', 'public')
         ]);
 
-        $topic -> post() ->save($post);
+        // $topic -> post() ->save($post);
 
-        return $topic;
+        return ($topic);
 
     
   }

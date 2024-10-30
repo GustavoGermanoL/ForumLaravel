@@ -6,74 +6,164 @@
     <title> Criar Categoria </title>
 </head>
 <style>
-.span {
-  text-decoration: none;
-  color: var(--bg-dark);
-}
-form {
-  --bg-light: #efefef;
-  --bg-dark: #707070;
-  --clr: #58BC82;
-  --clr-alpha: #9c9c9c60;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  width: 70vh;
-}
+
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    height: 100vh;
-    /* background-color : #d3d3d3; */
-}
-.form .input-span {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: .5rem;
-}    
-form .submit {
-  padding: 1rem 0.75rem;
-  width: 100%;
-  display: flex;
   align-items: center;
-  gap: 0.5rem;
-  border-radius: 3rem;
-  background-color: var(--bg-dark);
-  color: var(--bg-light);
-  border: none;
-  cursor: pointer;
-  transition: all 300ms;
-  font-weight: 600;
-  font-size: .9rem;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
 }
-    
+
+.form {
+  background-color: #15172b;
+  border-radius: 20px;
+  box-sizing: border-box;
+  height: 500px;
+  padding: 20px;
+  width: 320px;
+}
+
+.title {
+  color: #eee;
+  font-family: sans-serif;
+  font-size: 36px;
+  font-weight: 600;
+  margin-top: 30px;
+}
+
+.subtitle {
+  color: #eee;
+  font-family: sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.input-container {
+  height: 50px;
+  position: relative;
+  width: 100%;
+}
+
+.ic1 {
+  margin-top: 40px;
+}
+
+.ic2 {
+  margin-top: 30px;
+}
+
+.input {
+  background-color: #303245;
+  border-radius: 12px;
+  border: 0;
+  box-sizing: border-box;
+  color: #eee;
+  font-size: 18px;
+  height: 100%;
+  outline: 0;
+  padding: 4px 20px 0;
+  width: 100%;
+}
+
+.cut {
+  background-color: #15172b;
+  border-radius: 10px;
+  height: 20px;
+  left: 20px;
+  position: absolute;
+  top: -20px;
+  transform: translateY(0);
+  transition: transform 200ms;
+  width: 76px;
+}
+
+.cut-short {
+  width: 50px;
+}
+
+.input:focus ~ .cut,
+.input:not(:placeholder-shown) ~ .cut {
+  transform: translateY(8px);
+}
+
+.placeholder {
+  color: #65657b;
+  font-family: sans-serif;
+  left: 20px;
+  line-height: 14px;
+  pointer-events: none;
+  position: absolute;
+  transform-origin: 0 50%;
+  transition: transform 200ms, color 200ms;
+  top: 20px;
+}
+
+.input:focus ~ .placeholder,
+.input:not(:placeholder-shown) ~ .placeholder {
+  transform: translateY(-30px) translateX(10px) scale(0.75);
+}
+
+.input:not(:placeholder-shown) ~ .placeholder {
+  color: #808097;
+}
+
+.input:focus ~ .placeholder {
+  color: #dc2f55;
+}
+
+.submit {
+  background-color: #08d;
+  border-radius: 12px;
+  border: 0;
+  box-sizing: border-box;
+  color: #eee;
+  cursor: pointer;
+  font-size: 18px;
+  height: 50px;
+  margin-top: 38px;
+  // outline: 0;
+  text-align: center;
+  width: 100%;
+}
+
+.submit:active {
+  background-color: #06b;
+}
+
 </style>
 <body>
-    <form method = "POST" action = "{{ route('routeCreateTopic') }}">
+    <form method = "POST" action = "{{ route('routeCreateTopic') }}" class="form">
         @csrf
-        <h1> Criar topic </h1>
+        <div class="title"> Criar topic </div>
          <!-- Titulo -->
-        <span class="input-span">
-        <input type =  "text" name = "title" placeholder = "Titulo" value = "{{ old('title') }}"></span>
+          <div class = "input-container ic1">
+            <input type =  "text" class = "input" name = "title" placeholder = "Titulo" value = "{{ old('title') }}">
+          <div class="cut"> </div>
+        </div>
         <!-- Descricao -->
-        <span class="input-span">
-        <input type = "text" name = "description" placeholder = "Descricao" value = "{{ old('description') }}"></span>
+        <div class = "input-container ic2">
+          <input type = "text"  class = "input" name = "description" placeholder = "Descricao" value = "{{ old('description') }}">
+        <div class = "cut"></div>
+      </div>
         <!-- Status -->
-        <span class="input-span">
-        <input type = "text" name = "status" placeholder = "Status" value = "{{ old('status') }}"></span>
-
+        <div class = "input-container ic2">
+      
+        <input type = "text" class = "input" name = "status" placeholder = "Status" value = "{{ old('status') }}">
+<div class = "cut"> </div>
+</div>
         <!-- imagem -->
         <span class="input-span">
         <input type = "text" name = "image" placeholder = "Image" value = "{{ old('image') }}"></span>
         
-       @foreach ($categories as $category)
-       <option value = "{route('')}">
-        <input type="submit" value="Crie" class="submit" />
-       @endforeach
+        <select  type="" id="category" name="category" value="{{ old('category') }}" required>
+        @foreach ($categories as $category)
+          <option value = "{{$category->id}}">
+                {{$category -> title}}
+          </option> 
+        @endforeach 
+        </select>
+      <input type="submit" value="Crie" class="submit" />
 </body>
 </html>

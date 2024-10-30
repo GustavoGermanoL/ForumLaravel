@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('topics', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('category_id');
-            $table->foreign('id')->references('id')->on('posts');
             $table->string('title');
             $table->text('description');
             $table->boolean('status')->default(true);
