@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TopicController;
+use App\Http\Controllers\CommentaryController;
 use App\Http\Controllers\TagController;
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +40,7 @@ Route::get('/logout', [AuthController::class, 'logoutUser']) ->name('logoutUser'
 
 //Topic
 Route::group(['prefix' => 'topics'], function(){
-Route::get('/topics', [TopicController::class , 'index']) ->name('routeListTopic');
+Route::get('/', [TopicController::class , 'index']) ->name('routeListAllTopics');
 Route::match(['get', 'post'], '/create', [TopicController::class, 'createTopic']) ->name('routeCreateTopic');
 Route::get('/{cid}/edit', [TopicController::class, 'editTopic']) -> name('routeEditTopic');
 Route::put('/{cid}/update', [TopicController::class, 'updateTopic']) ->name('routeUpdateTopic');
@@ -64,3 +65,13 @@ Route::get('/tags/{tid}/edit', [TagController::class, 'editTag']) -> name('route
 Route::put('/tags/{tid}/update', [TagController::class, 'updateTag']) ->name('routeUpdateTag');
 Route::delete('/tags/{tid}/delete', [TagController::class, 'deleteTag']) ->name('routeDeleteTag');
 Route::get('/tags/{tid}', [TagController::class, 'listTagByID']) ->name('routeListTag');
+
+//Commentary
+Route::group(['prefix' => 'comment'], function(){
+    Route::get('/', [CommentaryController::class , 'index']) ->name('routeListAllComments');
+    Route::match(['get', 'post'], '/create', [CommentaryController::class, 'createComment']) ->name('routeCreateComment');
+    Route::get('/{cid}/edit', [CommentaryController::class, 'editComment']) -> name('routeEditComment');
+    Route::put('/{cid}/update', [CommentaryController::class, 'updateComment']) ->name('routeUpdateComment');
+    Route::delete('{cid}/delete', [CommentaryController::class, 'deleteComment']) ->name('routeDeleteComment');
+    Route::get('/{cid}', [CommentaryController::class, 'listCommentByID']) ->name('routeListComment');
+    });

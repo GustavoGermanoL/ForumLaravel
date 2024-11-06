@@ -50,8 +50,25 @@ class TopicController extends Controller
 
         // $topic -> post() ->save($post);
 
-        return ($topic);
+        return redirect()->route('routeListAllTopics')->with('topic', $topic);
 
     
   }
+  public function index(Request $request){
+    $topics = Topic::all();
+    return view('topic.listAllTopics', ['topics' => $topics]);
+}
+
+public function deleteTopic(Request $request, $tid){
+    Topic::where('id', $tid) -> delete();
+    return redirect() -> route('routeListAllTopics')
+                            -> with('message', 'Excltido com sucesso');
+}
+
+public function listTopicById($tid, Request $request){
+    $topic = Topic::where('id', $tid) -> first();
+    return view('topic.listTopicById', ['topic' => $topic]);
+    
+}
+
 }
