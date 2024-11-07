@@ -164,6 +164,14 @@ body {
           </option> 
         @endforeach 
         </select>
+
+        <select  id="tag" name="tag" value="{{ old('tag') }}" multiple required>
+        @foreach ($tags as $tag)
+          <option value = "{{$tag->id}}">
+                {{$tag -> title}}
+          </option> 
+        @endforeach 
+        </select>
       <input type="submit" value="Crie" class="submit" />
 </body>
 </html>

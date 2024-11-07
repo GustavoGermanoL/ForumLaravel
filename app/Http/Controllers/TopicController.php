@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Topic;
 use App\Models\Post;
+use App\Models\Tag;
 use App\Models\Category;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Auth;
@@ -19,8 +20,8 @@ class TopicController extends Controller
     public function createTopic(Request $request){
         if($request -> method() === 'GET'){
             $categories = Category::all();
-
-            return view('topic.createTopic', ['categories' => $categories]);
+            $tags = Tag::all();
+            return view('topic.createTopic', ['categories' => $categories, 'tags' => $tags]);
 
         }else {
             $request->validate([
@@ -35,6 +36,7 @@ class TopicController extends Controller
             'description' => $request->description,
             'status' => $request->status,
             'category_id' => $request->category,
+            'tag_id' => $request ->tag
         ]);
     }
 
@@ -56,7 +58,10 @@ class TopicController extends Controller
   }
   public function index(Request $request){
     $topics = Topic::all();
-    return view('topic.listAllTopics', ['topics' => $topics]);
+    $categories = Category::all();
+    $tags = Tag::all();
+    
+    return view('topic.listAllTopics', ['topics' => $topics, 'categories' => $categories, 'tags' => $tags]);
 }
 
 public function deleteTopic(Request $request, $tid){

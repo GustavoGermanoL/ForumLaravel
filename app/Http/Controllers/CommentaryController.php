@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Topic;
 use App\Models\Post;
+use App\Models\Comment;
 use App\Models\Category;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Auth;
@@ -15,9 +16,9 @@ class CommentaryController extends Controller
 
 {
 
-    public function createComment(Request $request){
+    public function createComment($tid ,Request $request){
         if($request -> method() === 'GET'){
-            $comments = Category::all();
+            $comments = Comment::all();
 
             return view('Comment.createComment', ['comments' => $comments]);
 
@@ -25,14 +26,12 @@ class CommentaryController extends Controller
             $request->validate([
                 'content' => 'required|string',
                 
-                
             ]);
 
         $Comment = Comment::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'status' => $request->status,
-            'category_id' => $request->category,
+            'content' => $request->content,
+            'topic_id' => $request->topic,
+            
         ]);
     }
 
@@ -42,31 +41,28 @@ class CommentaryController extends Controller
 
         $Comment->post()->create([
             'user_id' => Auth::id(),
-            'image' => $request->image,
             // 'image' => $request->file('image')->store('images', 'public')
         ]);
 
         // $Comment -> post() ->save($post);
+        $topic = Topic::where('id', $tid) -> first();
 
-        return redirect()->route('routeListAllComments')->with('Comment', $Comment);
+        // return redirect()->route('routeListTopic')->with('Comment', $Comment);
+        return view('topic.listTopicById', ['topic' => $topic]);
 
     
   }
-  public function index(Request $request){
-    $Comments = Comment::all();
-    return view('Comment.listAllComments', ['Comments' => $Comments]);
+
+public function deleteComment(Request $request, $cid, $tid){
+    Comment::where('id', $cid) -> delete();
+    $topic = Topic::where('id', $tid) -> first();
+
+    return view('Comment.listTopicById', ['topic' => $topic]);
 }
 
-public function deleteComment(Request $request, $tid){
-    Comment::where('id', $tid) -> delete();
-    return redirect() -> route('routeListAllComments')
-                            -> with('message', 'Excltido com sucesso');
-}
-
-public function listCommentById($tid, Request $request){
-    $Comment = Comment::where('id', $tid) -> first();
+public function listCommentById($cid, Request $request){
+    $Comment = Comment::where('id', $cid) -> first();
     return view('Comment.listCommentById', ['Comment' => $Comment]);
-    
 }
 
 }

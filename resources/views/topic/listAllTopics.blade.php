@@ -59,12 +59,22 @@ table th {
         <td> Titulo </td>
         <td> Descrição </td>
         <td> Status </td>
+        <td> Categoria </td>
+        @foreach($tags as $tag)
+        <td> Tags </td>
+        @endforeach
     </tr>
     @foreach($topics as $topic)
     <tr>
         <td> {{$topic->title}} </td>
         <td> {{$topic->description}} </td>
         <td> {{$topic->status}} </td>
+    @foreach($categories as $category)
+        <td> {{$category->title}} </td>
+    @foreach($tags as $tag)
+        <td> {{$tag->title}} </td>
+    @endforeach
+    @endforeach
         <td> <a class="fa-solid fa-street-view" href="{{ route('routeListTopic', $topic -> id) }}"> Visualizar </a>
         </td>
         <td>
@@ -81,6 +91,7 @@ table th {
         </td>
     </tr>
 
+    
     @endforeach
 </table>
 

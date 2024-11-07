@@ -15,7 +15,6 @@ class Topic extends Post
         'description',
         'status',
         'category_id',
-    
     ];
 
     public function category()
