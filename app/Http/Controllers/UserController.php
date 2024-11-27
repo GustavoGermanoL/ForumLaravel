@@ -39,13 +39,19 @@ class UserController extends Controller
             $request -> validate([
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
-                'password' => 'required|string|min:8|confirmed'
+                'password' => 'required|string|min:8|confirmed',
+                // 'photo' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             ]);
 
+            // $imageFile = $request->file('photo');
+            
+
+            
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
+                
             ]);
 
             Auth::login($user);
@@ -58,13 +64,20 @@ class UserController extends Controller
     }
     //feito
     public function updateUser(Request $request, $uid){
+
+        // $imageFile = $request->file('photo');
+        $imagePath = $request->file('photo') -> store('images', 'public');
+
+
         $user = User::where('id', $uid) -> first();
         $user -> name = $request -> name;
         $user -> email = $request -> email;
+        $user -> photo = $imagePath;
         if($request -> password != ''){
             $user -> password = Hash::make($request -> password);
         }
         $user->save();
+
         return redirect() -> route('routeListUser', [$user -> id])
                                 -> with('message', 'Atualizado com sucesso!');
     }

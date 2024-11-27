@@ -95,7 +95,7 @@ form .submit:hover {
 </style>
 <body>
     
-        <form method="post" action =  "{{ route('register') }}"  class="form" >
+        <form method="post" action =  "{{ route('register') }}"  class="form" Enctype = "multipart/form-data" >
           @csrf
             <h1>Registro</h1>
             <p>Insira seus dados para se registrar</p>
@@ -113,6 +113,11 @@ form .submit:hover {
             <label class ="label">Password</label>
             <input type="password" id="password" name = "password" placeholder="Coloque sua senha" /></span>
             @error('password') <span> {{ $message }} </span> @enderror
+
+            <!-- <span class = "input-span">
+            <label class ="label">Foto</label>
+            <input type="file" name = "photo"  id = "photo" value = ""  /> </span>
+            @error('photo') <span> {{ $message }} </span> @enderror -->
 
             <span class = "input-span">
             <label class="label">Confirm Password</label>

@@ -39,7 +39,7 @@ input[type="submit"]:hover {
 }
 </style>
 
-<form id="edit-user-form" method = "POST" action = "{{ route('routeUpdateUser', $user->id) }}">
+<form id="edit-user-form" method = "POST" action = "{{ route('routeUpdateUser', $user->id) }}" enctype = "multipart/form-data">
   @method('put')
   @csrf
   <label for="username">Nome: </label>
@@ -50,6 +50,9 @@ input[type="submit"]:hover {
 
   <label for="password">Password: </label>
   <input type="password" id="password" name="password" value=""><br><br>
+
+  <label for="photo">Foto: </label>
+  <input type = "file" id = "photo" name="photo" value = ""> <br><br>
 
   <input type="submit" value="Save Changes">
 </form>
