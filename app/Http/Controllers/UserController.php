@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
+use App\Models\Topic;
+use App\Controllers\TopicController;
 
 class UserController extends Controller
 {
@@ -14,7 +16,8 @@ class UserController extends Controller
     // no_camel_case <<
 
     public function index(Request $request){
-        return view('index.index');
+        $topics = Topic::all(); // Recupera todos os tópicos do banco de dados
+        return view('index.index', compact('topics'));
     }
     //feito
     public function listAllUsers(Request $request){
@@ -58,9 +61,21 @@ class UserController extends Controller
     }
     //feito
     public function updateUser(Request $request, $uid){
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            'password' => 'string|min:3|nullable',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $imagePath = $request->file('photo') -> store('images', 'public');
+
         $user = User::where('id', $uid) -> first();
         $user -> name = $request -> name;
         $user -> email = $request -> email;
+        $user -> photo = $imagePath;
+        
         if($request -> password != ''){
             $user -> password = Hash::make($request -> password);
         }

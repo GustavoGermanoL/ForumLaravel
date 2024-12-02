@@ -26,7 +26,7 @@ Route::middleware('auth') ->group(function (){
     Route::get('/users/{uid}', [UserController::class, 'listUserByID']) ->name('routeListUser');
 });
 
-Route::get('/index', [UserController::class, 'index']) ->name('routeIndex');
+Route::get('/', [UserController::class, 'index']) ->name('routeIndex');
 
 //Users
 
@@ -67,11 +67,9 @@ Route::delete('/tags/{tid}/delete', [TagController::class, 'deleteTag']) ->name(
 Route::get('/tags/{tid}', [TagController::class, 'listTagByID']) ->name('routeListTag');
 
 //Commentary
-Route::group(['prefix' => 'comment'], function(){
-    Route::get('/', [CommentaryController::class , 'index']) ->name('routeListAllComments');
-    Route::match(['get', 'post'], '/create', [CommentaryController::class, 'createComment']) ->name('routeCreateComment');
-    Route::get('/{cid}/edit', [CommentaryController::class, 'editComment']) -> name('routeEditComment');
-    Route::put('/{cid}/update', [CommentaryController::class, 'updateComment']) ->name('routeUpdateComment');
-    Route::delete('{cid}/delete', [CommentaryController::class, 'deleteComment']) ->name('routeDeleteComment');
-    Route::get('/{cid}', [CommentaryController::class, 'listCommentByID']) ->name('routeListComment');
-    });
+
+   Route::get('/comments', [CommentaryController::class , 'index']) ->name('routeListAllComments');
+    Route::match(['get', 'post'], '/topic/{tid}/comment', [CommentaryController::class, 'createComment']) ->name('routeCreateComment');
+    Route::put('/comment/{cid}/edit', [CommentaryController::class, 'editComment']) -> name('routeEditComment');
+    Route::delete('/comment/{cid}/delete/{tid}', [CommentaryController::class, 'deleteComment']) ->name('routeDeleteComment');
+    

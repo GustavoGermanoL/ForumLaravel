@@ -17,52 +17,70 @@ class CommentaryController extends Controller
 {
 
     public function createComment($tid ,Request $request){
-        if($request -> method() === 'GET'){
-            $comments = Comment::all();
-
-            return view('Comment.createComment', ['comments' => $comments]);
-
-        }else {
+        
             $request->validate([
                 'content' => 'required|string',
                 
             ]);
 
-        $Comment = Comment::create([
+            
+        $comment = Comment::create([
             'content' => $request->content,
-            'topic_id' => $request->topic,
+            'topic_id' => $tid,
             
         ]);
-    }
+    
 
         // $post = new Post([
         //     'image' => $request->image,
         // ]);
 
-        $Comment->post()->create([
+        $comment->post()->create([
             'user_id' => Auth::id(),
-            // 'image' => $request->file('image')->store('images', 'public')
+            'image' => null,  // ou omita se o campo image for nullable
         ]);
 
         // $Comment -> post() ->save($post);
-        $topic = Topic::where('id', $tid) -> first();
+        
 
         // return redirect()->route('routeListTopic')->with('Comment', $Comment);
-        return view('topic.listTopicById', ['topic' => $topic]);
+        return redirect()->route('routeListTopic', ['cid' => $tid])->with('success', 'Comentário criado com sucesso!');
 
     
   }
 
-public function deleteComment(Request $request, $cid, $tid){
-    Comment::where('id', $cid) -> delete();
+
+  public function editComment($cid, Request $request)
+    {
+        
+        $request->validate([
+            'content' => 'required|string',
+        ]);
+
+        $comment = Comment::find($cid);
+
+        // Atualizar o comentário
+        $comment->update([
+            'content' => $request->content,
+        ]);
+
+        // Redirecionar de volta para o tópico
+        return redirect()->route('routeListTopic', ['cid' => $comment->topic_id])->with('success', 'Comentário atualizado com sucesso!');
+    }
+
+
+public function deleteComment($cid, $tid){
+    $comment = Comment::find($cid);
     $topic = Topic::where('id', $tid) -> first();
 
-    return view('Comment.listTopicById', ['topic' => $topic]);
+    $comment -> delete();
+
+    return redirect()->route('topic.listTopicById', ['topic' => $topic])->with('success', 'Comentario excluido');
+    
+
+    
 }
 
-public function listCommentById($cid, Request $request){
-    $Comment = Comment::where('id', $cid) -> first();
-    return view('Comment.listCommentById', ['Comment' => $Comment]);
-}
+
 
 }

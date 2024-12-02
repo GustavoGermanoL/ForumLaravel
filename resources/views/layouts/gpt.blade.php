@@ -21,7 +21,14 @@
         justify-content: space-between;
         align-items: center;
         border-bottom: 2px solid #0965bb;
-        position: static;
+        position: fixed;
+        /* Fixa no topo da página */
+        top: 0;
+        /* Alinha ao topo */
+        width: 100%;
+        /* Ocupa toda a largura */
+        z-index: 1000;
+        /* Garante que o header esteja acima de outros elementos */
 
     }
 
@@ -105,10 +112,9 @@
     }
 
     .content {
-        flex: 1;
-        padding: 20px;
+        margin-top: 100px;   
         margin-left: 164px;
-        width: 100%
+        padding: 20px;
     }
     </style>
 </head>

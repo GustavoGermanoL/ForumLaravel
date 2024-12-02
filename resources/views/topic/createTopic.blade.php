@@ -134,7 +134,7 @@ body {
 
 </style>
 <body>
-    <form method = "POST" action = "{{ route('routeCreateTopic') }}" class="form">
+    <form method = "POST" action = "{{ route('routeCreateTopic') }}" class="form" enctype = "multipart/form-data">
         @csrf
         <div class="title"> Criar topic </div>
          <!-- Titulo -->
@@ -154,8 +154,8 @@ body {
 <div class = "cut"> </div>
 </div>
         <!-- imagem -->
-        <span class="input-span">
-        <input type = "text" name = "image" placeholder = "Image" value = "{{ old('image') }}"></span>
+        <label for="image">Image: </label>
+      <input type = "file" id = "image" name="image" value = ""> <br><br>
         
         <select  type="" id="category" name="category" value="{{ old('category') }}" required>
         @foreach ($categories as $category)
@@ -165,7 +165,7 @@ body {
         @endforeach 
         </select>
 
-        <select  id="tag" name="tag" value="{{ old('tag') }}" multiple required>
+        <select  id="tag" name="tags[]" value="{{ old('tag') }}" multiple required>
         @foreach ($tags as $tag)
           <option value = "{{$tag->id}}">
                 {{$tag -> title}}

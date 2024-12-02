@@ -4,380 +4,297 @@
 @if($topic != null)
 
 <style>
-    /* Reset de margens e paddings */
-    * {
-        box-sizing: border-box;
+body {
+    background-color: #808080;
+    color: rgb(253, 253, 253);
+}
+
+.container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+div .message-cell.message-cell--user {
+    font-family: "Segoe UI", "Helvetica Neue", Helvetica, Roboto, sans-serif;
+    font-size: 15px;
+    color: rgb(253, 253, 253);
+    text-align: left;
+    background-color: rgb(27, 27, 27);
+    border: 1px solid rgb(46, 45, 45);
+    padding: 10px;
+    width: 140px;
+    box-sizing: border-box;
+    border-radius: 3px;
+    margin-right: 20px;
+    /* Colocando a parte do usuário à esquerda */
+}
+
+.bbWrapper {
+    flex: 1;
+    background-color: rgb(33, 33, 33);
+    border-radius: 5px;
+    border: 1px solid #3a8bbd;
+    padding: 15px;
+    width: 100%;
+    max-width: 800px;
+    /* Limita o tamanho do conteúdo do tópico */
+    margin: 0 auto;
+    /* Centraliza o conteúdo do tópico */
+}
+
+.bbWrapper,
+.bbImage,
+.message-content {
+    font-family: "Segoe UI", sans-serif;
+    font-size: 15px;
+    line-height: 21px;
+    color: white;
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+    word-wrap: break-word;
+}
+
+.bbImage {
+    width: 100%;
+    height: auto; 
+    max-width: 100%; 
+    object-fit: contain; 
+    margin: 0 auto; 
+    display: block; 
+}
+
+.bbImage img {
+    width: 100%; 
+    height: auto; 
+    object-fit: contain; 
+}
+
+
+
+.message-content {
+    padding: 10px;
+    background-color: rgb(45, 45, 45);
+    border: none;
+    border-radius: 5px;
+}
+
+.message-tags {
+    padding: 10px;
+    background-color: rgb(45, 45, 45);
+    border-radius: 5px;
+    border: none;
+    margin-top: 10px;
+}
+
+.message-tags p {
+    color: rgb(255, 255, 255);
+}
+
+.message-tags p a {
+    color: #3a8bbd;
+    text-decoration: none;
+}
+
+.message-tags p a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .message-cell.message-cell--user {
+        width: 100%;
+        margin-right: 0;
     }
-    div .bbWrapper {
-	/* Font & Text */
-	font-family: "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", sans-serif;
-	font-size: 15px;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: 400;
-	letter-spacing: normal;
-	line-height: 21px;
-	text-decoration: none solid rgb(253, 253, 253);
-	text-align: start;
-	text-indent: 0px;
-	text-transform: none;
-	vertical-align: baseline;
-	white-space: normal;
-	word-spacing: 0px;
 
-	/* Color & Background */
-	background-attachment: scroll;
-	background-color: rgba(0, 0, 0, 0);
-	background-image: none;
-	background-position: 0% 0%;
-	background-repeat: repeat;
-	color: rgb(253, 253, 253);
-
-	/* Box */
-	height: 585.125px;
-	width: 1082px;
-	border: 0px none rgb(253, 253, 253);
-	border-top: 0px none rgb(253, 253, 253);
-	border-right: 0px none rgb(253, 253, 253);
-	border-bottom: 0px none rgb(253, 253, 253);
-	border-left: 0px none rgb(253, 253, 253);
-	margin: 0px;
-	padding: 0px;
-	max-height: none;
-	min-height: 0px;
-	max-width: none;
-	min-width: 0px;
-
-	/* Positioning */
-	position: static;
-	top: auto;
-	bottom: auto;
-	right: auto;
-	left: auto;
-	float: none;
-	display: block;
-	clear: none;
-	z-index: auto;
-
-	/* List */
-	list-style-image: none;
-	list-style-type: none;
-	list-style-position: outside;
-
-	/* Table */
-	border-collapse: separate;
-	border-spacing: 0px 0px;
-	caption-side: top;
-	empty-cells: show;
-	table-layout: auto;
-
-	/* Miscellaneous */
-	overflow: visible;
-	cursor: auto;
-	visibility: visible;
-
-	/* Effects */
-	transform: none;
-	transition: all;
-	outline: rgb(255, 0, 0) dashed 0.666667px;
-	outline-offset: 0px;
-	box-sizing: border-box;
-	resize: none;
-	text-shadow: none;
-	text-overflow: clip;
-	word-wrap: break-word;
-	box-shadow: none;
-	border-top-left-radius: 0px;
-	border-top-right-radius: 0px;
-	border-bottom-left-radius: 0px;
-	border-bottom-right-radius: 0px;
+    .bbWrapper {
+        padding: 10px;
+    }
 }
 
-img .bbImage {
-	/* Font & Text */
-	font-family: "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", sans-serif;
-	font-size: 15px;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: 400;
-	letter-spacing: normal;
-	line-height: 21px;
-	text-decoration: none solid rgb(253, 253, 253);
-	text-align: start;
-	text-indent: 0px;
-	text-transform: none;
-	vertical-align: baseline;
-	white-space: normal;
-	word-spacing: 0px;
 
-	/* Color & Background */
-	background-attachment: scroll;
-	background-color: rgba(0, 0, 0, 0);
-	background-image: none;
-	background-position: 0% 0%;
-	background-repeat: repeat;
-	color: rgb(253, 253, 253);
-
-	/* Box */
-	height: 396.729px;
-	width: 1082px;
-	border: 0px none rgb(253, 253, 253);
-	border-top: 0px none rgb(253, 253, 253);
-	border-right: 0px none rgb(253, 253, 253);
-	border-bottom: 0px none rgb(253, 253, 253);
-	border-left: 0px none rgb(253, 253, 253);
-	margin: 0px;
-	padding: 0px;
-	max-height: none;
-	min-height: 0px;
-	max-width: 100%;
-	min-width: 0px;
-
-	/* Positioning */
-	position: static;
-	top: auto;
-	bottom: auto;
-	right: auto;
-	left: auto;
-	float: none;
-	display: inline;
-	clear: none;
-	z-index: auto;
-
-	/* List */
-	list-style-image: none;
-	list-style-type: none;
-	list-style-position: outside;
-
-	/* Table */
-	border-collapse: separate;
-	border-spacing: 0px 0px;
-	caption-side: top;
-	empty-cells: show;
-	table-layout: auto;
-
-	/* Miscellaneous */
-	overflow: clip;
-	cursor: pointer;
-	visibility: visible;
-
-	/* Effects */
-	transform: none;
-	transition: all;
-	outline: rgb(255, 0, 0) dashed 0.666667px;
-	outline-offset: 0px;
-	box-sizing: border-box;
-	resize: none;
-	text-shadow: none;
-	text-overflow: clip;
-	word-wrap: break-word;
-	box-shadow: none;
-	border-top-left-radius: 0px;
-	border-top-right-radius: 0px;
-	border-bottom-left-radius: 0px;
-	border-bottom-right-radius: 0px;
+.comment-section {
+    margin-top: 20px;
+    padding: 10px;
+    border-top: 2px solid #ddd;
 }
 
-div .message-cell message-cell--main {
-	/* Font & Text */
-	font-family: "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", sans-serif;
-	font-size: 15px;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: 400;
-	letter-spacing: normal;
-	line-height: 21px;
-	text-decoration: none solid rgb(253, 253, 253);
-	text-align: start;
-	text-indent: 0px;
-	text-transform: none;
-	vertical-align: top;
-	white-space: normal;
-	word-spacing: 0px;
-
-	/* Color & Background */
-	background-attachment: scroll;
-	background-color: rgba(0, 0, 0, 0);
-	background-image: none;
-	background-position: 0% 0%;
-	background-repeat: repeat;
-	color: rgb(253, 253, 253);
-
-	/* Box */
-	height: 760.646px;
-	width: 1102px;
-	border: 0px none rgb(253, 253, 253);
-	border-top: 0px none rgb(253, 253, 253);
-	border-right: 0px none rgb(253, 253, 253);
-	border-bottom: 0px none rgb(253, 253, 253);
-	border-left: 0px none rgb(253, 253, 253);
-	margin: 0px;
-	padding: 10px;
-	max-height: none;
-	min-height: auto;
-	max-width: none;
-	min-width: 0px;
-
-	/* Positioning */
-	position: static;
-	top: auto;
-	bottom: auto;
-	right: auto;
-	left: auto;
-	float: none;
-	display: block;
-	clear: none;
-	z-index: auto;
-
-	/* List */
-	list-style-image: none;
-	list-style-type: none;
-	list-style-position: outside;
-
-	/* Table */
-	border-collapse: separate;
-	border-spacing: 0px 0px;
-	caption-side: top;
-	empty-cells: show;
-	table-layout: auto;
-
-	/* Miscellaneous */
-	overflow: visible;
-	cursor: auto;
-	visibility: visible;
-
-	/* Effects */
-	transform: none;
-	transition: all;
-	outline: rgb(255, 0, 0) dashed 0.666667px;
-	outline-offset: 0px;
-	box-sizing: border-box;
-	resize: none;
-	text-shadow: none;
-	text-overflow: clip;
-	word-wrap: break-word;
-	box-shadow: none;
-	border-top-left-radius: 0px;
-	border-top-right-radius: 3px;
-	border-bottom-left-radius: 0px;
-	border-bottom-right-radius: 3px;
+.comment-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #333;
 }
 
-div .title {
-	/* Font & Text */
-	font-family: "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", sans-serif;
-	font-size: 15px;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: 400;
-	letter-spacing: normal;
-	line-height: 21px;
-	text-decoration: none solid rgb(253, 253, 253);
-	text-align: center;
-	text-indent: 0px;
-	text-transform: none;
-	vertical-align: baseline;
-	white-space: normal;
-	word-spacing: 0px;
 
-	/* Color & Background */
-	background-attachment: scroll;
-	background-color: rgba(0, 0, 0, 0);
-	background-image: none;
-	background-position: 0% 0%;
-	background-repeat: repeat;
-	color: rgb(253, 253, 253);
-
-	/* Box */
-	height: 36.3958px;
-	width: 1082px;
-	border: 0px none rgb(253, 253, 253);
-	border-top: 0px none rgb(253, 253, 253);
-	border-right: 0px none rgb(253, 253, 253);
-	border-bottom: 0px none rgb(253, 253, 253);
-	border-left: 0px none rgb(253, 253, 253);
-	margin: 0px;
-	padding: 0px;
-	max-height: none;
-	min-height: 0px;
-	max-width: none;
-	min-width: 0px;
-
-	/* Positioning */
-	position: static;
-	top: auto;
-	bottom: auto;
-	right: auto;
-	left: auto;
-	float: none;
-	display: block;
-	clear: none;
-	z-index: auto;
-
-	/* List */
-	list-style-image: none;
-	list-style-type: none;
-	list-style-position: outside;
-
-	/* Table */
-	border-collapse: separate;
-	border-spacing: 0px 0px;
-	caption-side: top;
-	empty-cells: show;
-	table-layout: auto;
-
-	/* Miscellaneous */
-	overflow: visible;
-	cursor: auto;
-	visibility: visible;
-
-	/* Effects */
-	transform: none;
-	transition: all;
-	outline: rgb(255, 0, 0) dashed 0.666667px;
-	outline-offset: 0px;
-	box-sizing: border-box;
-	resize: none;
-	text-shadow: none;
-	text-overflow: clip;
-	word-wrap: break-word;
-	box-shadow: none;
-	border-top-left-radius: 0px;
-	border-top-right-radius: 0px;
-	border-bottom-left-radius: 0px;
-	border-bottom-right-radius: 0px;
+.comment-form {
+    margin-bottom: 20px;
 }
 
-.b{
-    color: black;
+.comment-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    min-height: 100px;
 }
-.text {
-    color: black;
 
+.comment-form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
 }
 
+.comment-form button:hover {
+    background-color: #0056b3;
+}
+
+
+.comment {
+    background-color: rgb(45, 45, 45);
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #3a8bbd;
+    border-radius: 5px;
+    color: white;
+}
+
+.comment p {
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+
+.comment-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.comment-actions form {
+    display: inline;
+}
+
+.comment-actions button {
+    background-color: #28a745;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+}
+
+.comment-actions button:hover {
+    background-color: #218838;
+}
+
+.comment-actions .delete-button {
+    background-color: #dc3545;
+}
+
+.comment-actions .delete-button:hover {
+    background-color: #c82333;
+}
+
+.success-message {
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.error-message {
+    background-color: #dc3545;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
 </style>
-<div class = "message-cell">
 
-<div class = "bbWrapper">
-    <div class = "title">
-        <span style = "font-size: 26px"> 
-            <b class = "b" > {{$topic -> title}} </b>
-    </span>
-</div>
-    <div class = "bbImage">
-        <img src = "">
+<div class="container">
+    <div style="display: flex; justify-content: flex-start; align-items: flex-start;">
+       
+        <div class="message-cell message-cell--user">
+            <p>Usuário: <strong>{{ $topic->post->user->name  }}</strong></p>
+            <p>Posts do Usuário: <strong>{{ $userPostsCount }}</strong></p>
+        </div>
+
+      
+        <div class="bbWrapper">
+            <h1 class="title"> {{$topic -> title}} </h1>
+
+            <div class="message-content">
+                <div class="bbImage">
+                <img src="{{ asset('storage/' . $topic->post->image) }}" alt="Imagem do Tópico">
+
+               
+                </div>
+
+                <br>
+                <div class="text">
+                    <p> {{$topic-> description}} </p>
+                </div>
+                <div class="message-tags">
+                    <p>Tag:
+                        @foreach ($topic->tags as $tag)
+                        {{ $tag-> title }}
+                        @endforeach
+                    </p>
+                    <P>Categoria: {{$topic -> category -> title }}</P>
+                </div>
+            </div>
+        </div>
     </div>
-    
-    <br>
-    <div class = "text">
-    <br>
-    Tópico para discussão e divulgação de notícias relacionadas ao novo socket da AMD, e as novas gerações de CPUs lançadas para ele.
-    <br>
-    A primeira geração de CPUs para o socket AM5 usará a arquitetura Zen 4, e deve ser lançada em Setembro de 2022.
 
+   
+    <div class="comment-section">
+        <h3>Comentários</h3>
+
+       <!-- Criar -->
+        <form action="{{ route('routeCreateComment', ['tid' => $topic->id]) }}" method="POST" class="comment-form">
+            @csrf
+            <textarea name="content" required placeholder="Escreva seu comentário..."></textarea>
+            <button type="submit">Comentar</button>
+        </form>
+
+       
+        @foreach ($topic->comments as $comment)
+        <div class="comment">
+            <p>{{ $comment->content }}</p>
+
+            <div class="comment-actions">
+              <!-- Editar -->
+                <form action="{{ route('routeEditComment', ['cid' => $comment->id]) }}" method="POST">
+                    @csrf
+                    @method('put')
+                    <textarea name="content" required>{{ $comment->content }}</textarea>
+                    <button type="submit">Editar</button>
+                </form>
+
+                <!-- Excluir  -->
+                <form action="{{ route('routeDeleteComment', ['cid' => $comment->id, 'tid' => $topic->id]) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir?');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="delete-button">Excluir</button>
+                </form>
+            </div>
+
+        </div>
+        @endforeach
+    </div>
 </div>
-</div>
-</div>
+
 @endif
 @endsection

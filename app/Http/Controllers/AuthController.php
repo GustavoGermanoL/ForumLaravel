@@ -16,7 +16,7 @@ class AuthController extends Controller
                         'password' => 'required|string'
                     ]);
             if(Auth::attempt($credentials)){
-                return redirect() -> intended('/index')
+                return redirect() -> intended('/')
                                   ->with('success', 'Login realizado com sucesso.');
             }
             return back()->withErrors([
