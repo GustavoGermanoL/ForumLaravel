@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\Topic;
 use App\Models\Post;
 use App\Models\Tag;
+use App\Models\Comment;
 use App\Models\Category;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentaryController;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -70,7 +72,14 @@ class TopicController extends Controller
 }
 
 public function deleteTopic(Request $request, $tid){
-    Topic::where('id', $tid) -> delete();
+
+    
+    $topic = Topic::find($tid);
+    Comment::where('topic_id', $tid)->delete();
+   
+    $topic->tags()->detach();
+    $topic->delete();
+
     return redirect() -> route('routeListAllTopics')
                             -> with('message', 'Excltido com sucesso');
 }

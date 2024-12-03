@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use App\Models\Topic;
+use App\Models\Comment;
 use App\Controllers\TopicController;
+use App\Controllers\CommentaryController;
 
 class UserController extends Controller
 {
@@ -17,6 +19,7 @@ class UserController extends Controller
 
     public function index(Request $request){
         $topics = Topic::all(); // Recupera todos os tópicos do banco de dados
+
         return view('index.index', compact('topics'));
     }
     //feito
@@ -27,8 +30,18 @@ class UserController extends Controller
 
     //feito
     public function listUserByID($uid, Request $request){
-        $user = User::where('id', $uid) -> first();
-        return view('user.profile', ['user' => $user]);
+        $user = User::findorfail($uid);
+
+        $topics = Topic::whereHas('post', function ($query) use ($uid){
+            $query->where('user_id', $uid);
+        })->get();
+
+        $comments = Comment::whereHas('post', function ($query) use ($uid) {
+            $query->where('user_id', $uid);
+        })->get();
+
+
+        return view('user.profile', compact('user', 'topics', 'comments'));
         print($uid);
     }
 

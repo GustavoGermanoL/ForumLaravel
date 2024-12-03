@@ -220,6 +220,51 @@ div .message-cell.message-cell--user {
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 20px;
+}.actions form {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.btn-edit, .btn-delete {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-edit {
+    background-color: #3a8bbd;
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #e0a800;
+}
+
+.btn-delete {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+}
+
+.comment-form button,
+.comment-actions button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.comment-form button:hover,
+.comment-actions button:hover {
+    background-color: #0056b3;
 }
 </style>
 
@@ -227,19 +272,16 @@ div .message-cell.message-cell--user {
     <div style="display: flex; justify-content: flex-start; align-items: flex-start;">
        
         <div class="message-cell message-cell--user">
-            <p>Usuário: <strong>{{ $topic->post->user->name  }}</strong></p>
+            <p>Usuário: <strong>{{ $topic->post->user->name }}</strong></p>
             <p>Posts do Usuário: <strong>{{ $userPostsCount }}</strong></p>
         </div>
 
-      
         <div class="bbWrapper">
             <h1 class="title"> {{$topic -> title}} </h1>
 
             <div class="message-content">
                 <div class="bbImage">
-                <img src="{{ asset('storage/' . $topic->post->image) }}" alt="Imagem do Tópico">
-
-               
+                    <img src="{{ asset('storage/' . $topic->post->image) }}" alt="Imagem do Tópico">
                 </div>
 
                 <br>
@@ -254,41 +296,65 @@ div .message-cell.message-cell--user {
                     </p>
                     <P>Categoria: {{$topic -> category -> title }}</P>
                 </div>
+
+                @if(auth()->check() && auth()->user()->id === $topic->post->user_id)
+            <div class="actions">
+                <!-- Formulário para editar o tópico -->
+                <form action="{{ route('routeEditTopic', ['cid' => $topic->id]) }}" method="GET">
+                    @csrf
+                    <button type="submit" class="btn-edit">Editar Tópico</button>
+                </form>
+
+                <!-- Formulário para excluir o tópico -->
+                <form action="{{ route('routeDeleteTopic', ['cid' => $topic->id]) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn-delete">Excluir Tópico</button>
+                </form>
             </div>
+            @endif
+
+            </div>
+
+            
+            
         </div>
     </div>
 
-   
     <div class="comment-section">
         <h3>Comentários</h3>
 
-       <!-- Criar -->
+        <!-- Criar comentário -->
         <form action="{{ route('routeCreateComment', ['tid' => $topic->id]) }}" method="POST" class="comment-form">
             @csrf
             <textarea name="content" required placeholder="Escreva seu comentário..."></textarea>
             <button type="submit">Comentar</button>
         </form>
 
-       
+        <!-- Exibição dos comentários -->
         @foreach ($topic->comments as $comment)
         <div class="comment">
             <p>{{ $comment->content }}</p>
 
             <div class="comment-actions">
-              <!-- Editar -->
+                <!-- Editar comentário -->
+                @if(auth()->check() && auth()->user()->id === $comment->user_id)
                 <form action="{{ route('routeEditComment', ['cid' => $comment->id]) }}" method="POST">
                     @csrf
                     @method('put')
                     <textarea name="content" required>{{ $comment->content }}</textarea>
                     <button type="submit">Editar</button>
                 </form>
+                @endif
 
-                <!-- Excluir  -->
-                <form action="{{ route('routeDeleteComment', ['cid' => $comment->id, 'tid' => $topic->id]) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir?');">
+                <!-- Excluir comentário -->
+                @if(auth()->check() && auth()->user()->id === $comment->user_id)
+                <form action="{{ route('routeDeleteComment', ['cid' => $comment->id, 'tid' => $topic->id]) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este comentário?');">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="delete-button">Excluir</button>
                 </form>
+                @endif
             </div>
 
         </div>

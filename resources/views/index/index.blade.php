@@ -139,7 +139,8 @@
         <div class="topic">
             <h3>{{ $topic->title }}</h3>
             <p>{{ $topic->description }}</p> <!-- Adicionando a descrição -->
-            <img src="{{ asset('storage/' . $topic->post->image) }}" alt="Imagem do Tópico">
+            <img src="{{ $topic->post && $topic->post->image ? asset('storage/' . $topic->post->image) : asset('storage/no-image.png') }}" alt="Imagem do Tópico">
+
             <a href="{{ route('routeListTopic', $topic->id) }}">Ver Detalhes</a>
         </div>
         @endforeach

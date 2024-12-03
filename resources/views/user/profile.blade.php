@@ -1,123 +1,201 @@
-@extends('layouts.gpt')
+  @extends('layouts.gpt')
 
-@section('content')
-@if($user != null)
+  @section('content')
+  @if($user != null)
 
-<style>
-  .actions a {
-  text-decoration: none;
-  color: black;
-  font-size: 13px;
-  padding: 8px;
-  margin-top: 13px;
+  <style>
+body {
+    background-color: #808080;
+    color: rgb(253, 253, 253);
+    font-family: "Segoe UI", Arial, sans-serif;
 }
 
-  .delete {
-        background-color: #d9534f; 
-        color: white; 
-        border: none; 
-        padding: 8px 10px; 
-        font-size: 10px; 
-        border-radius: 3px; 
-        cursor: pointer; 
-        display: flex; 
-        align-items: center; 
-        margin-top: 15px;
-    }
-
-
-    .delete:hover {
-        background-color: #c9302c; 
-    }
-
-
-  .description {
-    font-size: 1.2rem;
-    font-family: serif;
-  }
-  .container {
-    width: 100%;
+.profile-container {
     max-width: 800px;
     margin: 0 auto;
-    font-family: Arial, sans-serif;
-  }
-
-  .header {
-    position: relative;
-    background-color: #f5f8fa;
-    border: 1px solid #e1e8ed;
+    background-color: #3b3b3b;
+    border: 1px solid #3a8bbd;
     border-radius: 8px;
-    overflow: hidden;
-  }
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
 
-  .banner {
-    height: 200px;
-    background-color: #3c3c3c;
-  }
-
-  .profile-info {
+.profile-header {
     display: flex;
     align-items: center;
-    padding: 20px;
-  }
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
 
-  .avatar {
-    width: 80px;
-    height: 80px;
+.profile-avatar {
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
+    background-color: #fff;
     margin-right: 20px;
-    border: 3px solid #fff;
-  }
+    border: 3px solid #3a8bbd;
+    overflow: hidden;
+    /* Impede que a imagem saia dos limites do círculo */
+}
 
-  .details {
-    flex: 1;
-  }
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Garante que a imagem ocupe toda a área do círculo sem distorção */
+}
 
-  .name {
+.profile-details h2 {
     margin: 0;
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-  }
+    font-size: 1.8rem;
+    color: #fff;
+}
 
-  .email {
-    margin: 5px 0 0;
-    font-size: 16px;
-    color: #657786;
-  }
+.profile-details p {
+    margin: 5px 0;
+    font-size: 1rem;
+    color: #d3d3d3;
+}
 
-  .actions {
+.profile-actions {
     display: flex;
-    justify-content: flex-end;
-    margin: 20px 0;
-  }
+    gap: 10px;
+}
 
-  
-</style>
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 1rem;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
-  <div class="container">
-    <div class="header">
-      <div class="banner"></div>
-      <div class="profile-info">
-        
-        <div class="details">
-          <h2 class="name">{{ $user->name }}</h2>
-          <p class="email">{{ $user->email }}</p>
-          <p class = "description"> Olá sou o {{ $user -> name }} e tenho um grande interesse por tecnologia , espero conhecer semelhantes para discutirmos sobre o cenario atual tecnologico.</p>
-        </div>
+.btn-edit {
+    background-color: #3a8bbd;
+}
+
+.btn-edit:hover {
+    background-color: #2c6d99;
+}
+
+.btn-delete {
+    background-color: #d9534f;
+}
+
+.btn-delete:hover {
+    background-color: #c12e2a;
+}
+
+.profile-sections {
+    margin-top: 20px;
+}
+
+.section {
+    background-color: #2d2d2d;
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 1px solid #3a8bbd;
+    border-radius: 5px;
+}
+
+.section h3 {
+    margin: 0 0 10px;
+    font-size: 1.4rem;
+    color: #fff;
+}
+
+.card {
+    background-color: #3b3b3b;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #3a8bbd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.card h4 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+.card p {
+    margin: 5px 0 10px;
+    font-size: 1rem;
+    color: #d3d3d3;
+}
+
+.card-actions {
+    text-align: right;
+}
+
+.card-actions .btn {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+}
+  </style>
+
+  <div class="profile-container">
+      <!-- Cabeçalho do perfil -->
+      <div class="profile-header">
+          <div class="profile-avatar">
+              <img src="{{ asset('storage/' .$user->photo)}}" alt="Foto">
+          </div>
+          <div class="profile-details">
+              <h2>{{ $user->name }}</h2>
+              <p>Email: {{ $user->email }}</p>
+          </div>
+          <!-- Ações do usuário -->
+          <div class="profile-actions">
+              <a href="{{ route('routeEditUser', $user->id) }}" class="btn btn-edit">Editar Usuário</a>
+              <form action="{{ route('routeDeleteUser', $user->id) }}" method="POST" style="display:inline;">
+                  @csrf
+                  @method('delete')
+                  <button type="submit" class="btn btn-delete">Deletar Usuário</button>
+              </form>
+          </div>
       </div>
-    </div>
-    <div class="actions">
-      <a class = "fa-solid fa-user-pen" href="{{ route('routeEditUser', $user->id) }}"> Editar Perfil </a>
-    <form action="{{ route('routeDeleteUser', $user->id) }}" method = "POST">
-                @csrf
-                @method('DELETE') 
-              <button type="submit" class="delete">
-                  <i class="fa-solid fa-user-minus"> Excluir Perfil </i>
-              </button>
-            </form>
-    </div>
+
+      <!-- Seções -->
+      <div class="profile-sections">
+          <!-- Tópicos do usuário -->
+          <div class="section">
+              <h3>Seus Tópicos</h3>
+              @forelse($topics as $topic)
+              <div class="card">
+                  <h4>{{ $topic->title }}</h4>
+                  <p>Criado {{ $topic->created_at->diffForHumans() }}</p>
+                  <div class="card-actions">
+                      <a href="{{ route('routeListTopic', $topic->id) }}" class="btn btn-edit">Visualizar</a>
+                  </div>
+              </div>
+              @empty
+              <p>Nenhum tópico criado ainda.</p>
+              @endforelse
+          </div>
+
+          <!-- Comentários do usuário -->
+          <div class="section">
+              <h3>Seus Comentários</h3>
+              @forelse($comments as $comment)
+              <div class="card">
+                  <h4>Comentário em: {{ $comment->topic->title }}</h4>
+                  <p>"{{ $comment->content }}"</p>
+                  <p>Postado {{ $comment->created_at->diffForHumans() }}</p>
+                  <div class="card-actions">
+                      <a href="{{ route('routeListTopic', $comment->topic->id) }}" class="btn btn-edit">Visualizar
+                          Tópico</a>
+                  </div>
+              </div>
+              @empty
+              <p>Nenhum comentário feito ainda.</p>
+              @endforelse
+          </div>
+      </div>
   </div>
 
-@endif
-@endsection
+  @endif
+  @endsection
