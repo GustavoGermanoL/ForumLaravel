@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Tag;
+use Illuminate\Support\Facades\DB;
+
 
 
 class TagController extends Controller
@@ -47,7 +49,13 @@ class TagController extends Controller
     }
 
     public function deleteTag(Request $request, $tid){
-        Tag::where('id', $tid) -> delete();
+
+        DB::table('topic_tags')->where('tag_id', $tid)->delete();
+
+        $tag = Tag::findOrFail($tid);
+        $tag->delete();
+
+
         return redirect() -> route('routeListTags')
                                 -> with('message', 'Excltido com sucesso');
     }

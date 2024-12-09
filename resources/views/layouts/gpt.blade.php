@@ -38,8 +38,6 @@
         display: flex;
     }
 
-
-
     .sidebar-main {
         box-sizing: border-box;
         background-color: #3c3c3c;
@@ -52,12 +50,10 @@
         display: flex;
         justify-content: space-between;
         border-right: 1px solid #0965bb;
-
     }
 
     .sidebar ul {
         text-align: center;
-
     }
 
     .home-page {
@@ -75,7 +71,6 @@
         display: inline-block;
         margin-bottom: 50px;
         margin-left: -50px;
-
     }
 
     a {
@@ -149,6 +144,15 @@
                     <li class="allusers">
                         <a class="fa-solid fa-users" href="{{ route('listAllUsers') }}"> Usuários </a>
                     </li>
+                    <li class="alltopics">
+                        <a class="fa-solid fa-comment" href="{{ route('routeListAllTopics') }}"> Tópicos </a>
+                    </li>
+                    <li class="tags">
+                        <a class="fa-solid fa-tag" href="{{ route('routeListTags') }}"> Tags </a>
+                    </li>
+                    <li class="categories">
+                        <a class="fa-solid fa-list" href="{{ route('routeListCategories') }}"> Categorias </a>
+                    </li>
                     @endif
                     <div class="spacer"></div>
 
@@ -160,10 +164,6 @@
                     <li class="exit">
                         <a class="fa-solid fa-right-from-bracket" href="{{ route('logoutUser') }}">Sair</a>
                     </li>
-
-
-
-
                     @else
                     <li class="login">
                         <a class="fa-solid fa-user" href="{{ route('login') }}"> Entrar </a>
@@ -182,9 +182,6 @@
         </div>
 
     </main>
-
-
-
 
 </body>
 

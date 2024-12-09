@@ -2,6 +2,7 @@
 
 @section('content')
 <style>
+/* O mesmo estilo usado no createTopic */
 body {
     background-color: #808080;
     color: rgb(253, 253, 253);
@@ -75,28 +76,29 @@ body {
 
 <div class="container">
     <div class="bbWrapper">
-        <h1 class="title">Criar Novo Tópico</h1>
+        <h1 class="title">Editar Tópico</h1>
 
-        <form method="POST" action="{{ route('routeCreateTopic') }}" class="form" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('routeUpdateTopic', $topic->id) }}" class="form" enctype="multipart/form-data">
             @csrf
+            @method('PUT')
 
             <!-- Título -->
             <label for="title" class="label">Título</label>
-            <input type="text" id="title" name="title" class="input" placeholder="Digite o título" value="{{ old('title') }}" required>
+            <input type="text" id="title" name="title" class="input" value="{{ old('title', $topic->title) }}" required>
             @error('title')
             <span class="error-message">{{ $message }}</span>
             @enderror
 
             <!-- Descrição -->
             <label for="description" class="label">Descrição</label>
-            <textarea id="description" name="description" class="input" rows="4" placeholder="Digite a descrição" required>{{ old('description') }}</textarea>
+            <textarea id="description" name="description" class="input" rows="4" required>{{ old('description', $topic->description) }}</textarea>
             @error('description')
             <span class="error-message">{{ $message }}</span>
             @enderror
 
             <!-- Status -->
             <label for="status" class="label">Status</label>
-            <input type="text" id="status" name="status" class="input" placeholder="Digite o status" value="{{ old('status') }}" required>
+            <input type="text" id="status" name="status" class="input" value="{{ old('status', $topic->status) }}" required>
             @error('status')
             <span class="error-message">{{ $message }}</span>
             @enderror
@@ -109,28 +111,32 @@ body {
             @enderror
 
             <!-- Categoria -->
-            <label for="category" class="label">Categoria</label>
-            <select id="category" name="category" class="select" required>
+            <label for="category_id" class="label">Categoria</label>
+            <select id="category_id" name="category_id" class="select" required>
                 @foreach ($categories as $category)
-                <option value="{{ $category->id }}">{{ $category->title }}</option>
+                <option value="{{ $category->id }}">
+                    {{ $category->title }}
+                </option>
                 @endforeach
             </select>
-            @error('category')
+            @error('category_id')
             <span class="error-message">{{ $message }}</span>
             @enderror
 
             <!-- Tags -->
             <label for="tags" class="label">Tags</label>
-            <select id="tags" name="tags[]" class="select" multiple required>
+            <select id="tags" name="tags[]" class="select" multiple>
                 @foreach ($tags as $tag)
-                <option value="{{ $tag->id }}">{{ $tag->title }}</option>
+                <option value="{{ $tag->id }}">
+                    {{ $tag->title }}
+                </option>
                 @endforeach
             </select>
             @error('tags')
             <span class="error-message">{{ $message }}</span>
             @enderror
 
-            <button type="submit" class="submit">Criar Tópico</button>
+            <input type="submit" class="submit">Atualizar Tópico
         </form>
     </div>
 </div>

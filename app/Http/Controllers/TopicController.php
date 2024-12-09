@@ -104,5 +104,51 @@ public function listTopicById($tid, Request $request)
     return view('topic.listTopicById', compact('topic', 'userPostsCount'));
 }
 
+public function editTopic(Request $request, $tid){
+    $topic = Topic::where('id', $tid)->first();
+    $categories = Category::all();
+    $tags = Tag::all();
+
+
+    return view('topic.editTopic', ['topic' => $topic, 'categories' => $categories, 'tags' => $tags]);
+}
+
+
+public function updateTopic(Request $request, $tid){
+
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'required|string',
+        'status' => 'required|int',
+        'category_id' => 'required|exists:categories,id',
+        'tags' => 'array',
+        'tags.*' => 'exists:tags,id',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+    ]);
+
+    $topic = Topic::findOrFail($tid);
+
+    
+
+    $topic->title = $request->title;
+    $topic->description = $request->description;
+    $topic->status = $request->status;
+    $topic->category_id = $request->category_id;
+    
+    
+    if($request ->hasFile('image')){
+        $imagePath = $request->file('image') -> store('images', 'public');
+        $topic->post()->update([
+            'image' => $imagePath
+        ]);
+    }
+
+    $topic -> save();
+    $topic->tags()->sync($request->tags);
+
+    return redirect() -> route('routeListTopic', [$topic -> id])
+                            -> with('message', 'Atualizado com sucesso!');
+}
+
 
 }

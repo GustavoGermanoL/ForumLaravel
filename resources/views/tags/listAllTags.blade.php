@@ -10,9 +10,7 @@
 }
 
 a {
-
     text-decoration: none;
-
 }
 
 table {
@@ -20,8 +18,6 @@ table {
     border-collapse: collapse;
     border: 1px solid #ddd;
 }
-
-
 
 table th,
 table td {
@@ -48,22 +44,48 @@ table th {
     margin-top: 15px;
 }
 
-
 .delete:hover {
     background-color: #c9302c;
 }
+
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 1rem;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px; /* Espaço abaixo do botão */
+}
+
+.btn-create {
+    background-color: #28a745;
+}
+
+.btn-create:hover {
+    background-color: #218838;
+}
+
+.btn-edit {
+    background-color: #3a8bbd;
+}
+
 </style>
+
+<!-- Botão para criar uma nova tag -->
+<a href="{{ route('routeCreateTag') }}" class="btn btn-create">Criar Nova Tag</a>
 
 <table>
     <tr>
-        <td> Titulo </td>
-        
+        <td> Título </td>
     </tr>
     @foreach($tags as $tag)
     <tr>
         <td> {{$tag->title}} </td>
-        
-        
+        <td>
+            <a href="{{ route('routeEditTag', $tag->id) }}" class="btn btn-edit">Editar Tag</a>
         </td>
         <td>
             <form action="{{ route('routeDeleteTag', $tag->id) }}" method="POST">
@@ -75,14 +97,11 @@ table th {
             </form>
         </td>
     </tr>
-
     @endforeach
 </table>
 
 @endsection
 
 @section('footer')
-
 Feito Por Gustavo Germânico
-
 @endsection

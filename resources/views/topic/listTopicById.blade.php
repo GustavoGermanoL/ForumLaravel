@@ -300,10 +300,9 @@ div .message-cell.message-cell--user {
                 @if(auth()->check() && auth()->user()->id === $topic->post->user_id)
             <div class="actions">
                 <!-- Formulário para editar o tópico -->
-                <form action="{{ route('routeEditTopic', ['cid' => $topic->id]) }}" method="GET">
-                    @csrf
-                    <button type="submit" class="btn-edit">Editar Tópico</button>
-                </form>
+               
+                <a class = "btn-edit" href="{{ route('routeEditTopic', $topic->id) }}">Editar Tópico</a>
+                
 
                 <!-- Formulário para excluir o tópico -->
                 <form action="{{ route('routeDeleteTopic', ['cid' => $topic->id]) }}" method="POST">

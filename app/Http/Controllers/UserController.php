@@ -81,23 +81,32 @@ class UserController extends Controller
     //feito
     public function updateUser(Request $request, $uid){
 
+        
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
             'password' => 'string|min:3|nullable',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $imagePath = $request->file('photo') -> store('images', 'public');
+        
 
         $user = User::where('id', $uid) -> first();
+        
         $user -> name = $request -> name;
         $user -> email = $request -> email;
-        $user -> photo = $imagePath;
-        
-        if($request -> password != ''){
-            $user -> password = Hash::make($request -> password);
+
+        if ($request->hasFile('photo')) {
+            $imagePath = $request->file('photo')->store('images', 'public');
+            $user->photo = $imagePath; // Atualiza o caminho da foto apenas se uma nova imagem foi enviada
         }
+
+        
+        if (!empty($request->password)) {
+        $user->password = Hash::make($request->password);
+        }
+
+        
         $user->save();
 
         return redirect() -> route('routeListUser', [$user -> id])
