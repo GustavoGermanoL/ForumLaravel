@@ -59,12 +59,11 @@ class CommentaryController extends Controller
 
         $comment = Comment::find($cid);
 
-        // Atualizar o comentário
+    
         $comment->update([
             'content' => $request->content,
         ]);
 
-        // Redirecionar de volta para o tópico
         return redirect()->route('routeListTopic', ['cid' => $comment->topic_id])->with('success', 'Comentário atualizado com sucesso!');
     }
 

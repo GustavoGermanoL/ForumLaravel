@@ -18,7 +18,7 @@ class UserController extends Controller
     // no_camel_case <<
 
     public function index(Request $request){
-        $topics = Topic::all(); // Recupera todos os tópicos do banco de dados
+        $topics = Topic::all(); 
 
         return view('index.index', compact('topics'));
     }
@@ -98,7 +98,7 @@ class UserController extends Controller
 
         if ($request->hasFile('photo')) {
             $imagePath = $request->file('photo')->store('images', 'public');
-            $user->photo = $imagePath; // Atualiza o caminho da foto apenas se uma nova imagem foi enviada
+            $user->photo = $imagePath; 
         }
 
         
